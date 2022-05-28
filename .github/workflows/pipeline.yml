@@ -71,6 +71,9 @@ jobs:
     needs: DeployHom
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Auth GCP AppEngine
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
@@ -82,10 +85,10 @@ jobs:
         id: appengine
         env: 
           ARTIFACT_REGISTRY: ${{ secrets.ARTIFACT_REGISTRY }}
-        uses: 'google-github-actions/deploy-appengine@v0'
+        uses: 'google-github-actions/deploy-appengine@v0.4.0'
         with:
-          image_url: ${{ secrets.ARTIFACT_REGISTRY }}/myapp:latest
           deliverables: app.yaml
+          image_url: ${{ secrets.ARTIFACT_REGISTRY }}/myapp:latest
 
       - name: Prod Test
         run: 'curl "${{ steps.appengine.outputs.url }}"'
