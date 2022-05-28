@@ -84,8 +84,8 @@ jobs:
           ARTIFACT_REGISTRY: ${{ secrets.ARTIFACT_REGISTRY }}
         uses: 'google-github-actions/deploy-appengine@v0'
         with:
-          image_url: ${{ secrets.ARTIFACT_REGISTRY }}/myapp:latest 
           deliverables: app.yaml
+          image_url: ${{ secrets.ARTIFACT_REGISTRY }}/myapp:latest
 
       - name: Prod Test
         run: 'curl "${{ steps.appengine.outputs.url }}"'
